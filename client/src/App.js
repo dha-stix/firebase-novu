@@ -13,9 +13,10 @@ const socket = socketIO.connect("http://localhost:4000");
 const App = () => {
 	const [schedules, setSchedules] = useState([]);
 
-	getTokenFrom();
 
 	useEffect(() => {
+		getTokenFrom();
+
 		onMessageListener()
 			.then((payload) => {
 				console.log("From Message", payload);

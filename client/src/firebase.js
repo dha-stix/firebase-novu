@@ -7,9 +7,9 @@ const firebaseConfig = {
 	projectId: "nextjs-invoice",
 	storageBucket: "nextjs-invoice.appspot.com",
 	messagingSenderId: "254972337230",
-	appId: "1:254972337230:web:4e7f435f4e480e1a18371f",
-	measurementId: "G-29FG3587X2",
-};
+	appId: "1:254972337230:web:019c500a3ac9700018371f",
+	measurementId: "G-BMC3B54TLQ"
+  };
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
@@ -18,8 +18,7 @@ const messaging = getMessaging(firebaseApp);
 
 export const getTokenFrom = () => {
 	return getToken(messaging, {
-		vapidKey:
-			"BLHwpbkdS0P3r4m8mrT_VPvQE-fh2iiaLeSeNynKQozlP8a1q3Y2oIRCKrAvWBT8QESPH7380WmMXRrbJ2H-TjU",
+		vapidKey: "BDHkeFXHKxWkAtwfxqMcrXBNaacatCdOxRIr2XO2GxX-sgBdnwaEfr8hx7ivc20GCoA0CbNID0yhqdgywCBtBpg"
 	})
 		.then((currentToken) => {
 			if (currentToken) {
@@ -38,6 +37,7 @@ export const getTokenFrom = () => {
 export const onMessageListener = () =>
 	new Promise((resolve) => {
 		onMessage(messaging, (payload) => {
+			console.log(payload, 'ASDASDA')
 			resolve(payload);
 		});
 	});

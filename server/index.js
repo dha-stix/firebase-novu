@@ -50,26 +50,31 @@ let eventList = [];
 // });
 
 app.get("/api", async (req, res) => {
+	const subscriberId = '62d1fc97bbe3160014a8cb1113'
+	await novu.subscribers.identify(subscriberId, {
+		firstName: 'Dima',
+		lastName: 'Grossman'
+	})
+
 	await novu.subscribers
-		.setCredentials("62d1fc97bbe3160014a8cb23", PushProviderIdEnum.FCM, {
+		.setCredentials(subscriberId, PushProviderIdEnum.FCM, {
 			deviceTokens: [
-				"dL5ipQ0OdkPlhGGRwe6WRx:APA91bGfO25DmPjQm5FojQjdDP1hGP3yNd4f2jh7Y5vldF9MUNtBSJak3v5jbwabgZw71GIGxMAhRzwNaVEh3vT4GkN1EBDX8sM7GtIf9MvEWtM9OrnojQfzA05a3Xw1oRWqQtoL7dOo",
+				"c8P_K1Y3nexdn1wM87lY8C:APA91bEnL9IPUdRdEvBMSM10ApIGTGmcdCSeDf3-fIIaDmdyYRnSls_6r9VJ36gGpKyfBUuU15Ebc44MpQSnFH1lwAJgPnSeomv7GhbLexF03qSB9w-CRmSP6z0LJbWXT_BNETRuyy-g",
 			],
+		});
+
+	const trigger= await novu
+		.trigger("on-boarding-notification-DyhJZuHvb", {
+			to: {
+				subscriberId: subscriberId,
+			},
+			payload: {
+				title: "David",
+				body: "Working!",
+			},
 		})
-		.then(
-			await novu
-				.trigger("on-boarding-notification-DyhJZuHvb", {
-					to: {
-						subscriberId: "62d1fc97bbe3160014a8cb23",
-					},
-					payload: {
-						title: "David",
-						body: "Working!",
-					},
-				})
-				.then((res) => console.log(res))
-		)
-		.catch((err) => console.error(err));
+
+		res.json(trigger.data);
 });
 
 http.listen(PORT, () => {
